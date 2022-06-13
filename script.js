@@ -30,17 +30,37 @@
 // addItems.style.fontWeight = 'bold';
 // addItems.style.color = 'green';
 
-const items = document.getElementsByClassName('list-group-item');
-console.log(items);
+// const items = document.getElementsByClassName('list-group-item');
+// console.log(items);
 
-items[1].textContent = 'Hello 2';
+// items[1].textContent = 'Hello 2';
 
-items[2].style.backgroundColor = 'green';
+// items[2].style.backgroundColor = 'green';
 
-for (let i=0; i<items.length; i++) {
-    items[i].style.fontWeight = 'bold';
-    items[i].style.color = 'red';
+// for (let i=0; i<items.length; i++) {
+//     items[i].style.fontWeight = 'bold';
+//     items[i].style.color = 'red';
+// }
+
+
+const li = document.getElementsByTagName('li');
+// console.log(items);
+
+li[1].textContent = 'Hello 2';
+
+li[2].style.backgroundColor = 'green';
+
+for (let i=0; i<li.length; i++) {
+    li[i].style.fontWeight = 'bold';
+    li[i].style.color = 'red';
 }
+
+const a = document.getElementsByClassName('list-group')[0];
+console.log(a.lastElementChild);
+a.lastElementChild.textContent = 'Changed ItemName through class name';
+
+const b = document.getElementsByTagName('li')[4];
+b.style.backgroundColor ='blue';
 
 
 
