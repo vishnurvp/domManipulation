@@ -194,13 +194,17 @@
 
 
 
-const form = document.getElementById('addForm');
+let form = document.getElementById('addForm');
 let itemList = document.getElementById('items');
+let filter = document.getElementById('filter');
 
 // form submit event
 form.addEventListener('submit', addItem);
 // delete event
 itemList.addEventListener('click', removeItem);
+// filter event
+filter.addEventListener('keyup', filterItems);
+
 
 
 // addItem
@@ -208,14 +212,15 @@ function addItem(e) {
     e.preventDefault();
     
     // get input value
-    const newItem = document.getElementById('item').value;
-
+    let newItem = document.getElementById('item').value;
+    let description = ' ' + document.getElementById('desc').value;
     // create new li element
     const li = document.createElement('li');
     li.className = 'list-group-item';
 
     // add text node with input value;
     li.appendChild(document.createTextNode(newItem));
+
     // create delet button element;
     const delButton = document.createElement('button');
     // add classes to delButton
@@ -224,6 +229,19 @@ function addItem(e) {
     delButton.appendChild(document.createTextNode('X'));
     // append button to li
     li.appendChild(delButton);
+
+    // add edit button
+
+    let edit = document.createElement('button');
+    edit.className = "edit float-right";
+    edit.appendChild(document.createTextNode('Edit'));
+    li.appendChild(edit);
+
+
+    // add description
+    li.appendChild(document.createTextNode(description));
+
+
     // append li to itemlist
     itemList.appendChild(li);
 }
@@ -240,10 +258,44 @@ function removeItem(e){
 
 
 let listItems = document.getElementsByClassName('list-group-item');
-console.log(listItems);
+// console.log(listItems);
 for (let i=0; i<listItems.length; i++) {
     let edit = document.createElement('button');
     edit.className = "edit float-right";
     edit.appendChild(document.createTextNode('Edit'));
     listItems[i].appendChild(edit);
+    listItems[i].appendChild(document.createTextNode(`item ${i+1}'s description`));
 }
+
+// filter items
+function filterItems(e){
+    // convert text to lowercase
+    let text = e.target.value.toLowerCase();
+
+    let items = itemList.getElementsByTagName('li');
+    // convert to array
+    Array.from(items).forEach(function(item) {
+        let itemName = item.firstChild.textContent;
+        let desc = item.lastChild.textContent;
+        if (itemName.toLocaleLowerCase().indexOf(text) != -1 || desc.toLocaleLowerCase().indexOf(text) != -1) {
+            item.style.display = 'block';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+
+
+}
+
+
+// add description box 
+
+//form
+let description = document.createElement('input');
+description.type = 'text';
+description.id = 'desc';
+description.className = 'form-control mr-2 desc';
+description.placeholder = 'Description';
+form.firstElementChild.placeholder = 'Item Name';
+form.insertBefore(description, form.lastElementChild);
+
