@@ -101,95 +101,149 @@
 
 // DOM Traversing
 
-const itemList = document.querySelector('#items');
+// const itemList = document.querySelector('#items');
 
 
-//parentNode
-// console.log(itemList.parentNode);
-itemList.parentNode.style.backgroundColor = '#f4f4f4';
-// console.log(itemList.parentNode.parentNode);
-// console.log(itemList.parentNode.parentNode.parentNode);
+// //parentNode
+// // console.log(itemList.parentNode);
+// itemList.parentNode.style.backgroundColor = '#f4f4f4';
+// // console.log(itemList.parentNode.parentNode);
+// // console.log(itemList.parentNode.parentNode.parentNode);
 
-// parentElement
-// console.log(itemList.parentElement);
-itemList.parentElement.style.backgroundColor = '#f4f4f4';
-// console.log(itemList.parentElement.parentElement);
-// console.log(itemList.parentElement.parentElement.parentElement);
+// // parentElement
+// // console.log(itemList.parentElement);
+// itemList.parentElement.style.backgroundColor = '#f4f4f4';
+// // console.log(itemList.parentElement.parentElement);
+// // console.log(itemList.parentElement.parentElement.parentElement);
 
-// childNodes
-console.log(itemList.childNodes); //PITA
+// // childNodes
+// console.log(itemList.childNodes); //PITA
 
-// children
-// console.log(itemList.children);
-// console.log(itemList.children[1]);
-itemList.children[1].style.backgroundColor = 'yellow';
+// // children
+// // console.log(itemList.children);
+// // console.log(itemList.children[1]);
+// itemList.children[1].style.backgroundColor = 'yellow';
 
-// // firstChild
-console.log(itemList.firstChild);
+// // // firstChild
+// console.log(itemList.firstChild);
 
-// // firstElementChild
-// console.log(itemList.firstElementChild);
-itemList.firstElementChild.textContent = 'Hello 1';
+// // // firstElementChild
+// // console.log(itemList.firstElementChild);
+// itemList.firstElementChild.textContent = 'Hello 1';
 
-// lastChild
-console.log(itemList.lastChild);
+// // lastChild
+// console.log(itemList.lastChild);
 
-// lastElementChild
-// console.log(itemList.lastElementChild);
-itemList.lastElementChild.textContent = 'Hello 4';
+// // lastElementChild
+// // console.log(itemList.lastElementChild);
+// itemList.lastElementChild.textContent = 'Hello 4';
 
-// nextSibling
-console.log(itemList.nextSibling);
+// // nextSibling
+// console.log(itemList.nextSibling);
 
-// nextElementSibling
-console.log(itemList.nextElementSibling);
+// // nextElementSibling
+// console.log(itemList.nextElementSibling);
 
-// previousSibling
-console.log(itemList.previousSibling);
+// // previousSibling
+// console.log(itemList.previousSibling);
 
-// previousElementSibling;
-// console.log(itemList.previousElementSibling);
-itemList.previousElementSibling.style.color = 'green';
-
-
-
-// createElement
-
-// create a div
-const newDiv = document.createElement('div');
-
-// add class
-newDiv.className = 'hello';
-
-// add id
-newDiv.id = 'hello1';
-
-// add attribute
-newDiv.setAttribute('title', 'hello Div');
-
-// create text node;
-const newDivText = document.createTextNode('Hello World');
-
-// add text to div
-newDiv.appendChild(newDivText);
-
-const container = document.querySelector('header .container');
-const h1 = document.querySelector('header h1');
-
-console.log(newDiv);
-
-newDiv.style.fontSize = '30px';
-
-container.insertBefore(newDiv, h1);
+// // previousElementSibling;
+// // console.log(itemList.previousElementSibling);
+// itemList.previousElementSibling.style.color = 'green';
 
 
-const ul = document.querySelector('.list-group');
-const newLi = document.createElement('li');
-newLi.className = 'list-group-item';
-newLi.textContent = 'Hello World';
 
-const item1 = ul.firstElementChild;
+// // createElement
 
-ul.insertBefore(newLi, item1);
+// // create a div
+// const newDiv = document.createElement('div');
+
+// // add class
+// newDiv.className = 'hello';
+
+// // add id
+// newDiv.id = 'hello1';
+
+// // add attribute
+// newDiv.setAttribute('title', 'hello Div');
+
+// // create text node;
+// const newDivText = document.createTextNode('Hello World');
+
+// // add text to div
+// newDiv.appendChild(newDivText);
+
+// const container = document.querySelector('header .container');
+// const h1 = document.querySelector('header h1');
+
+// console.log(newDiv);
+
+// newDiv.style.fontSize = '30px';
+
+// container.insertBefore(newDiv, h1);
 
 
+// const ul = document.querySelector('.list-group');
+// const newLi = document.createElement('li');
+// newLi.className = 'list-group-item';
+// newLi.textContent = 'Hello World';
+
+// const item1 = ul.firstElementChild;
+
+// ul.insertBefore(newLi, item1);
+
+
+
+const form = document.getElementById('addForm');
+let itemList = document.getElementById('items');
+
+// form submit event
+form.addEventListener('submit', addItem);
+// delete event
+itemList.addEventListener('click', removeItem);
+
+
+// addItem
+function addItem(e) {
+    e.preventDefault();
+    
+    // get input value
+    const newItem = document.getElementById('item').value;
+
+    // create new li element
+    const li = document.createElement('li');
+    li.className = 'list-group-item';
+
+    // add text node with input value;
+    li.appendChild(document.createTextNode(newItem));
+    // create delet button element;
+    const delButton = document.createElement('button');
+    // add classes to delButton
+    delButton.className = 'btn btn-danger btn-sm float-right delete';
+    // append text
+    delButton.appendChild(document.createTextNode('X'));
+    // append button to li
+    li.appendChild(delButton);
+    // append li to itemlist
+    itemList.appendChild(li);
+}
+
+
+function removeItem(e){
+    if (e.target.classList.contains('delete')) {
+        if (confirm('are you shure?')){
+            let li = e.target.parentElement;
+            itemList.removeChild(li);
+        }
+    }
+}
+
+
+let listItems = document.getElementsByClassName('list-group-item');
+console.log(listItems);
+for (let i=0; i<listItems.length; i++) {
+    let edit = document.createElement('button');
+    edit.className = "edit float-right";
+    edit.appendChild(document.createTextNode('Edit'));
+    listItems[i].appendChild(edit);
+}
